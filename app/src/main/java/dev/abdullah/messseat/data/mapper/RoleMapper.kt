@@ -1,0 +1,17 @@
+package dev.abdullah.messseat.data.mapper
+
+import dev.abdullah.messseat.data.enums.Role
+import dev.abdullah.messseat.domain.model.UserRole
+
+// -- Data -> Domain ---
+fun Role.toDomain() = when (this) {
+    Role.OWNER -> UserRole.OWNER
+    Role.TENANT -> UserRole.TENANT
+    else -> Role.TENANT
+}
+
+// --- Domain -> Data ---
+fun UserRole.toData() = when(this){
+    UserRole.TENANT -> Role.TENANT
+    UserRole.OWNER -> Role.OWNER
+}

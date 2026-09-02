@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MessSeat" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.MessSeat.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+        <item name="postSplashScreenTheme">@style/Theme.MessSeat</item>
+    </style>
+
+</resources>

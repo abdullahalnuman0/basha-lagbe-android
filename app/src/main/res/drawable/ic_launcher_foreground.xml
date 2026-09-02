@@ -1,0 +1,56 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+  <group android:scaleX="0.55"
+      android:scaleY="0.55"
+      android:translateX="22.5"
+      android:translateY="22.5">
+    <path
+        android:pathData="M10,45L50,10L90,45"
+        android:strokeLineJoin="round"
+        android:strokeWidth="8"
+        android:fillColor="#00000000"
+        android:strokeColor="#0A6C64"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M25,45L25,75L35,75"
+        android:strokeLineJoin="round"
+        android:strokeWidth="8"
+        android:fillColor="#00000000"
+        android:strokeColor="#0A6C64"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M75,45L75,75L65,75"
+        android:strokeLineJoin="round"
+        android:strokeWidth="8"
+        android:fillColor="#00000000"
+        android:strokeColor="#0A6C64"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M56,15L75,15L75,32"
+        android:strokeLineJoin="round"
+        android:strokeWidth="8"
+        android:fillColor="#00000000"
+        android:strokeColor="#0A6C64"
+        android:strokeLineCap="round"/>
+
+  <!--  <path-->
+  <!--      android:pathData="M512,495C596,495 667,562 667,650C667,762 560,882 512,966C464,882 357,762 357,650C357,562 428,495 512,495ZM512,588A62,62 0,1 0,512 712A62,62 0,1 0,512 588Z"-->
+  <!--      android:fillColor="#016A63"-->
+  <!--      android:fillType="evenOdd"/>-->
+    <path
+        android:pathData="M50,48.34C58.20,48.34 65.14,54.88 65.14,63.48C65.14,74.41 54.69,86.13 50,94.34C45.31,86.13 34.86,74.41 34.86,63.48C34.86,54.88 41.80,48.34 50,48.34ZM50,57.42A6.05,6.05 0,1 0,50 69.53A6.05,6.05 0,1 0,50 57.42Z"
+        android:fillColor="#016A63"
+        android:fillType="evenOdd" />
+
+  <!--  <path-->
+  <!--      android:pathData="M50,90C40,75 35,70 35,60A15,15 0,1 1,65 60C65,70 60,75 50,90Z"-->
+  <!--      android:fillColor="#0A6C64"/>-->
+  <!--  <path-->
+  <!--      android:pathData="M50,60m-7,0a7,7 0,1 1,14 0a7,7 0,1 1,-14 0"-->
+  <!--      android:fillColor="#FFFFFF"/>-->
+  </group>
+</vector>
+

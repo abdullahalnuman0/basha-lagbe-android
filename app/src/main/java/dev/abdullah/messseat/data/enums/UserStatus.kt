@@ -1,0 +1,8 @@
+package dev.abdullah.messseat.data.enums
+
+enum class UserStatus {
+    ACTIVE,
+    SUSPENDED,
+    BANNED,
+    PENDING_DELETION
+}
