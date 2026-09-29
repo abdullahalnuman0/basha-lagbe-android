@@ -40,9 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
 import dev.abdullah.messseat.presentation.auth.signup.LocationData
 import dev.abdullah.messseat.presentation.auth.signup.SignupUiState
-import androidx.compose.material3.MaterialTheme.colorScheme as color
+import androidx.compose.material3.MaterialTheme.colorScheme as colors
 
 
 @Composable
@@ -93,7 +94,7 @@ internal fun LocationSection(
     ) {
         Spacer(modifier = Modifier.height(4.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Where are you located?",
             subtitle = "Choose your location to discover relevant homes and messes."
         )
@@ -203,13 +204,13 @@ internal fun LocationSection(
                     )
 
                     val backgroundColor by animateColorAsState(
-                        targetValue = if (isSelected) color.primaryContainer else color.surface,
+                        targetValue = if (isSelected) colors.primaryContainer else colors.surface,
                         animationSpec = tween(250),
                         label = "areaBackground"
                     )
 
                     val borderColor by animateColorAsState(
-                        targetValue = if (isSelected) color.primary else color.onBackground.copy(
+                        targetValue = if (isSelected) colors.primary else colors.onBackground.copy(
                             alpha = 0.2f
                         ),
                         animationSpec = tween(250),
@@ -217,7 +218,7 @@ internal fun LocationSection(
                     )
 
                     val textColor by animateColorAsState(
-                        targetValue = if (isSelected) color.primary else color.onBackground,
+                        targetValue = if (isSelected) colors.primary else colors.onBackground,
                         animationSpec = tween(250),
                         label = "areaText"
                     )
@@ -264,7 +265,7 @@ internal fun LocationSection(
                             .clip(RoundedCornerShape(10.dp))
                             .border(
                                 width = 1.dp,
-                                color = if (isSelected) color.primary else color.onBackground.copy(
+                                colors = if (isSelected) colors.primary else colors.onBackground.copy(
                                     0.2f
                                 ),
                                 shape = RoundedCornerShape(10.dp)
@@ -273,14 +274,14 @@ internal fun LocationSection(
                                 onAreaSelected(areaName)
                                 areaExpanded = false
                             },
-                        color = if (isSelected) color.primaryContainer else color.surface,
+                        colors = if (isSelected) colors.primaryContainer else colors.surface,
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Text(
                             text = areaName,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                                color = if (isSelected) color.primary else color.onBackground
+                                colors = if (isSelected) colors.primary else colors.onBackground
                             ),
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                         )

@@ -1,21 +1,20 @@
 package dev.abdullah.messseat.presentation.auth.signup
 
-enum class SignupStep(val number: Int, val label: String) {
+import dev.abdullah.messseat.core.presentation.widgets.ProgressStep
 
-    ROLE_SELECTION(1, ""),
-    BASIC_INFO(2, "Basic Info"),
-    ABOUT_YOU(3, "About you"),
-    LOCATION(4, "Location"),
-    SECURITY(5, "Security");
+enum class SignupStep(override val label: String) : ProgressStep {
+    ROLE_SELECTION(""),
+    BASIC_INFO("Basic Info"),
+    ABOUT_YOU("About you"),
+    LOCATION("Location"),
+    SECURITY("Security");
 
     companion object {
-
-
-        val TOTAL_STEPS = SignupStep.entries.size
-        val FROM_STEPS_COUNT = TOTAL_STEPS - 1
-
-        val ACTIVE_INDEX: (Int) -> Int = {
-            it - 2
-        }
+        val progressSteps = listOf(
+            BASIC_INFO,
+            ABOUT_YOU,
+            LOCATION,
+            SECURITY
+        )
     }
 }

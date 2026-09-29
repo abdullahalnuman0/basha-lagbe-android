@@ -54,8 +54,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import dev.abdullah.messseat.domain.model.Gender
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
+import dev.abdullah.messseat.domain.enums.Gender
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.components.InlineMessage
 import dev.abdullah.messseat.presentation.auth.signup.LocationData
 import dev.abdullah.messseat.presentation.auth.signup.SignupUiState
 import androidx.compose.material3.MaterialTheme.colorScheme as color
@@ -92,7 +94,7 @@ internal fun AboutYouSection(
     ) {
         Spacer(modifier = Modifier.height(4.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Tell us about you",
             subtitle = "This helps us provide a more relevant experience."
         )
@@ -123,7 +125,7 @@ internal fun AboutYouSection(
                 )
             }
         }
-        InlineErrorMessage(error = state.genderError)
+        InlineMessage(message = state.genderError, isError = true)
 
         Spacer(Modifier.height(height = 24.dp))
 
@@ -303,7 +305,7 @@ private fun GenderSelectableCard(
 ) {
 
     val borderColor by animateColorAsState(
-        targetValue = if (isSelected) color.primary else Color.Unspecified,
+        targetValue = if (isSelected) color.primary else Color.Transparent,
         animationSpec = tween(200),
         label = "borderColor"
     )

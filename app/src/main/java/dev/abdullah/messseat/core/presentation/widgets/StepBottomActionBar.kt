@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.presentation.auth.signup.components
+package dev.abdullah.messseat.core.presentation.widgets
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun BottomActionBar(
+internal fun StepBottomActionBar(
     modifier: Modifier = Modifier,
     primaryBtnText: String,
     suggestBtnHintText: String = "Already have an account? ",
@@ -45,9 +45,9 @@ internal fun BottomActionBar(
     showSuggestBtnHint: Boolean = false,
     showBackButton: Boolean = true,
     isLoading: Boolean,
-    onPrimaryClick: () -> Unit,
+    onPrimaryBtnClick: () -> Unit,
     onBackClick: () -> Unit = {},
-    onSuggestBtnClick: () -> Unit
+    onSuggestBtnClick: () -> Unit={}
 ) {
 
 
@@ -92,7 +92,7 @@ internal fun BottomActionBar(
                 }
 
                 Button(
-                    onClick = onPrimaryClick,
+                    onClick = onPrimaryBtnClick,
                     enabled = enabled,
                     modifier = Modifier
                         .height(56.dp)

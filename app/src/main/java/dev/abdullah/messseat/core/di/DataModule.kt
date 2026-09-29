@@ -3,16 +3,15 @@ package dev.abdullah.messseat.core.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.abdullah.messseat.core.data.PreferencesManager
 import dev.abdullah.messseat.core.data.SessionManager
-import dev.abdullah.messseat.domain.model.User
 import dev.abdullah.messseat.core.data.appDataStore
-import dev.abdullah.messseat.data.dto.user.UserResponse
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
@@ -27,7 +26,11 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideSessionManager(dataStore: DataStore<Preferences>, moshi: Moshi): SessionManager =
-        SessionManager(dataStore, moshi.adapter(UserResponse::class.java))
+    fun provideSessionManager(dataStore: DataStore<Preferences>,json: Json): SessionManager =
+        SessionManager(dataStore,json)
+
+    @Provides
+    @Singleton
+    fun providePreferencesManager(dataStore: DataStore<Preferences>) = PreferencesManager(dataStore)
 
 }

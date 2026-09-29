@@ -36,12 +36,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.presentation.auth.forget.ForgetPwdUiState
 import dev.abdullah.messseat.presentation.auth.otp.OtpInputField
 import dev.abdullah.messseat.presentation.auth.signup.components.PasswordRequirementCard
 import dev.abdullah.messseat.presentation.auth.signup.components.PasswordStrengthCard
-import dev.abdullah.messseat.presentation.auth.signup.components.StepHeader
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
 
 @Composable
 internal fun PwdSection(
@@ -61,7 +61,7 @@ internal fun PwdSection(
 
         Spacer(Modifier.height(48.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Verify & Set Your Password",
             subtitle = "Enter the 6-digit code sent to your email and create a strong password for your account."
         )

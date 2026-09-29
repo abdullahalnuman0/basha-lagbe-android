@@ -1,9 +1,5 @@
-package dev.abdullah.messseat.presentation.auth
+package dev.abdullah.messseat.core.presentation.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,19 +34,27 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.abdullah.messseat.R
+import dev.abdullah.messseat.ui.theme.Space
 import androidx.compose.material3.MaterialTheme.colorScheme as color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun AuthInputTextField(
+fun AuthInputTextField(
     modifier: Modifier = Modifier,
     value: String,
+    labelAlpha: Float = 1f,
     label: String? = null,
     placeholder: String = "Enter your full name",
     error: String? = null,
-    icon: Painter = painterResource(R.drawable.solar_user),
+    wordCount: String? = null,
+    icon: Painter? = painterResource(R.drawable.solar_user),
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+    maxLines: Int = 4,
+    shape: Int = 35,
     isPassword: Boolean = false,
     isPhone: Boolean = false,
     readOnly: Boolean = false,
@@ -67,37 +71,39 @@ internal fun AuthInputTextField(
     val unfocusedColor = color.onBackground.copy(0.3f)
     var eyeClosed by remember { mutableStateOf(true) }
 
-    val leadingIcon: (@Composable () -> Unit)? = if (isPhone) {
-        {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 12.dp, end = 6.dp)
-            ) {
-                Icon(
-                    painter = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "+880",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = unfocusedColor
+    val leadingIcon: (@Composable () -> Unit)? = icon?.let {
+        if (isPhone) {
+            {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(start = 12.dp, end = 6.dp)
+                ) {
+                    Icon(
+                        painter = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
                     )
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "|",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = unfocusedColor
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "+880",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = unfocusedColor
+                        )
                     )
-                )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "|",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = unfocusedColor
+                        )
+                    )
+                }
             }
-        }
-    } else {
-        {
-            Icon(icon, placeholder)
+        } else {
+            {
+                Icon(icon, placeholder)
+            }
         }
     }
 
@@ -150,8 +156,8 @@ internal fun AuthInputTextField(
             Text(
                 text = label,
                 style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = if (isEnable) color.onBackground else color.onBackground.copy(0.5f)
+                    fontWeight = FontWeight.SemiBold,
+                    color = if (isEnable) color.onBackground.copy(labelAlpha) else color.onBackground.copy(0.5f)
                 )
             )
         }
@@ -159,11 +165,13 @@ internal fun AuthInputTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(35),
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(shape),
             placeholder = { Text(placeholder) },
             leadingIcon = leadingIcon,
-            singleLine = true,
+            singleLine = singleLine,
+            maxLines = maxLines,
+            minLines = minLines,
             isError = error != null,
             readOnly = readOnly,
             enabled = isEnable,
@@ -186,6 +194,21 @@ internal fun AuthInputTextField(
 
             keyboardOptions = keyboardOptions
         )
+
+        wordCount?.let {
+            Text(
+                text = wordCount,
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = color.onBackground.copy(0.5f)
+                ),
+                textAlign = TextAlign.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = Space.sm)
+            )
+        }
+
     }
 
 

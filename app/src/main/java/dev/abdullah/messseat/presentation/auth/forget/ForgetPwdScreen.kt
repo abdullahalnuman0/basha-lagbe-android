@@ -1,10 +1,6 @@
 package dev.abdullah.messseat.presentation.auth.forget
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -23,10 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.abdullah.messseat.core.presentation.components.StepAnimatedContent
+import dev.abdullah.messseat.core.presentation.widgets.StepBottomActionBar
 import dev.abdullah.messseat.presentation.auth.AuthEvent
 import dev.abdullah.messseat.presentation.auth.forget.components.EmailSection
 import dev.abdullah.messseat.presentation.auth.forget.components.PwdSection
-import dev.abdullah.messseat.presentation.auth.signup.components.BottomActionBar
 import dev.abdullah.messseat.presentation.auth.signup.components.SignupTopBar
 
 @Composable
@@ -74,36 +71,22 @@ fun ForgetPwdScreen(
             )
         },
         bottomBar = {
-            BottomActionBar(
+            StepBottomActionBar(
                 primaryBtnText = if (state.currentStep == ForgetPwdStep.EMAIL) "Send Verification Code" else "Reset Password",
                 isLoading = state.isLoading,
                 enabled = state.email.isNotEmpty(),
                 suggestBtnHintText = "Remember your password? ",
                 showSuggestBtnHint = state.currentStep == ForgetPwdStep.EMAIL,
                 showBackButton = state.currentStep != ForgetPwdStep.EMAIL,
-                onPrimaryClick = viewModel::onGoNext,
+                onPrimaryBtnClick = viewModel::onGoNext,
                 onBackClick = viewModel::onGoBack,
                 onSuggestBtnClick = onLogin
             )
         }
     ) { innerPadding ->
 
-        AnimatedContent(
-            targetState = state.currentStep, transitionSpec = {
-                val forward = state.isNavForward
-                val enterDirection = if (forward) {
-                    AnimatedContentTransitionScope.SlideDirection.Left
-                } else {
-                    AnimatedContentTransitionScope.SlideDirection.Right
-                }
-                val exitDirection = if (forward) {
-                    AnimatedContentTransitionScope.SlideDirection.Left
-                } else {
-                    AnimatedContentTransitionScope.SlideDirection.Right
-                }
-                (slideIntoContainer(enterDirection, animationSpec = tween(280)))
-                    .togetherWith(slideOutOfContainer(exitDirection, animationSpec = tween(280)))
-            },
+        StepAnimatedContent(
+            targetState = state.currentStep,
             label = "signupStepTransition",
             modifier = Modifier
                 .fillMaxSize()

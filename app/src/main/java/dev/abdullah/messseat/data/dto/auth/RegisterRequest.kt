@@ -2,8 +2,9 @@ package dev.abdullah.messseat.data.dto.auth
 
 import dev.abdullah.messseat.data.enums.Gender
 import dev.abdullah.messseat.data.enums.Role
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class RegisterRequest(
     val fullName: String,
     val email: String,

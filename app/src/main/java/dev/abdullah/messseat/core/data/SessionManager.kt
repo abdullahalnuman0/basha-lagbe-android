@@ -4,17 +4,16 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.squareup.moshi.JsonAdapter
 import dev.abdullah.messseat.data.dto.auth.AuthResponse
 import dev.abdullah.messseat.data.dto.user.UserResponse
-import dev.abdullah.messseat.domain.model.User
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 
 class SessionManager(
     private val dataStore: DataStore<Preferences>,
-    private val userAdapter: JsonAdapter<UserResponse>
+    private val json: Json
 ) {
 
     private object Keys {
@@ -41,7 +40,8 @@ class SessionManager(
     val userFlow = dataStore.data.map { prefs ->
         prefs[Keys.USER]?.let {
             runCatching {
-                userAdapter.fromJson(it)?.toDomain()
+                json.decodeFromString<UserResponse>(it)
+                    .toDomain()
             }.getOrNull()
         }
     }
@@ -54,10 +54,13 @@ class SessionManager(
     fun refreshToken() = refresh
 
     suspend fun saveSession(auth: AuthResponse) {
+        access = auth.accessToken
+        refresh = auth.refreshToken
+
         dataStore.edit { prefs ->
             prefs[Keys.ACCESS] = auth.accessToken
             prefs[Keys.REFRESH] = auth.refreshToken
-            prefs[Keys.USER] = userAdapter.toJson(auth.user)
+            prefs[Keys.USER] = json.encodeToString(auth.user)
         }
     }
 
@@ -69,7 +72,7 @@ class SessionManager(
     }
 
     suspend fun updateUser(user: UserResponse) =
-        dataStore.edit { it[Keys.USER] = userAdapter.toJson(user) }
+        dataStore.edit { it[Keys.USER] = json.encodeToString(user) }
 
 
     suspend fun clear() = dataStore.edit {

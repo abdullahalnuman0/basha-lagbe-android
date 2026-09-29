@@ -1,10 +1,6 @@
 package dev.abdullah.messseat.presentation.auth.signup
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -22,10 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.abdullah.messseat.core.presentation.components.StepAnimatedContent
+import dev.abdullah.messseat.core.presentation.widgets.StepBottomActionBar
 import dev.abdullah.messseat.presentation.auth.AuthEvent
 import dev.abdullah.messseat.presentation.auth.signup.components.AboutYouSection
 import dev.abdullah.messseat.presentation.auth.signup.components.BasicInfoSection
-import dev.abdullah.messseat.presentation.auth.signup.components.BottomActionBar
 import dev.abdullah.messseat.presentation.auth.signup.components.LocationSection
 import dev.abdullah.messseat.presentation.auth.signup.components.RoleSelectionSection
 import dev.abdullah.messseat.presentation.auth.signup.components.SecuritySection
@@ -87,36 +84,23 @@ fun SignupScreen(
             )
         },
         bottomBar = {
-            BottomActionBar(
+            StepBottomActionBar(
                 primaryBtnText = if (state.currentStep == SignupStep.SECURITY) "Create Account" else "Continue",
                 enabled = state.selectedRole != null,
                 isLoading = state.isLoading,
                 showSuggestBtnHint = state.currentStep == SignupStep.ROLE_SELECTION,
                 showBackButton = state.currentStep != SignupStep.ROLE_SELECTION,
-                onPrimaryClick = viewModel::onGoNext,
+                onPrimaryBtnClick = viewModel::onGoNext,
                 onBackClick = viewModel::onGoBack,
                 onSuggestBtnClick = onLogin
             )
         }
     ) { innerPadding ->
 
-        AnimatedContent(
-            targetState = state.currentStep, transitionSpec = {
-                val forward = state.isNavigatingForward
-                val enterDirection = if (forward) {
-                    AnimatedContentTransitionScope.SlideDirection.Left
-                } else {
-                    AnimatedContentTransitionScope.SlideDirection.Right
-                }
-                val exitDirection = if (forward) {
-                    AnimatedContentTransitionScope.SlideDirection.Left
-                } else {
-                    AnimatedContentTransitionScope.SlideDirection.Right
-                }
-                (slideIntoContainer(enterDirection, animationSpec = tween(280)))
-                    .togetherWith(slideOutOfContainer(exitDirection, animationSpec = tween(280)))
-            },
+        StepAnimatedContent(
+            targetState = state.currentStep,
             label = "signupStepTransition",
+            forward = state.isNavigatingForward,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)

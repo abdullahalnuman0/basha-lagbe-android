@@ -4,9 +4,10 @@ import dev.abdullah.messseat.domain.model.User
 import dev.abdullah.messseat.data.enums.Gender
 import dev.abdullah.messseat.data.enums.Role
 import dev.abdullah.messseat.data.enums.UserStatus
+import kotlinx.serialization.Serializable
 import java.time.Instant
 
-
+@Serializable
 class UserResponse(
 
     val id: Long = 0,

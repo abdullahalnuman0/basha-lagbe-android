@@ -1,7 +1,7 @@
 package dev.abdullah.messseat.data.mapper
 
 import dev.abdullah.messseat.data.enums.Role
-import dev.abdullah.messseat.domain.model.UserRole
+import dev.abdullah.messseat.domain.enums.UserRole
 
 // -- Data -> Domain ---
 fun Role.toDomain() = when (this) {

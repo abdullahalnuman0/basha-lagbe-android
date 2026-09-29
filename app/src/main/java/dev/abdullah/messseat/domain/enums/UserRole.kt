@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.domain.model
+package dev.abdullah.messseat.domain.enums
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Key

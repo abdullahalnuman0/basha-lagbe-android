@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.presentation.auth.signup.components
+package dev.abdullah.messseat.core.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -9,23 +9,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun InlineErrorMessage(
+fun InlineMessage(
     modifier: Modifier = Modifier,
-    error: String?
+    message: String?,
+    isError: Boolean? = null,
+    color: Color?=null
 ) {
+    val textColor = color ?: when{
+        isError ==null -> MaterialTheme.colorScheme.onBackground
+        isError -> MaterialTheme.colorScheme.error
+        else -> MaterialTheme.colorScheme.primary
+    }
+
     AnimatedVisibility(
-        visible = error != null,
+        visible = message != null,
         enter = fadeIn(tween(150)),
         exit = fadeOut(tween(150))
     ) {
-        if (error != null) {
+        if (message != null) {
             Text(
-                text = error,
-                color = MaterialTheme.colorScheme.error,
+                text = message,
+                color = textColor,
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Medium
                 ),

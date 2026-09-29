@@ -7,8 +7,8 @@ import dev.abdullah.messseat.data.dto.auth.EmailRequest
 import dev.abdullah.messseat.data.dto.auth.RegisterRequest
 import dev.abdullah.messseat.data.mapper.toData
 import dev.abdullah.messseat.data.repository.AuthRepository
-import dev.abdullah.messseat.domain.model.Gender
-import dev.abdullah.messseat.domain.model.UserRole
+import dev.abdullah.messseat.domain.enums.Gender
+import dev.abdullah.messseat.domain.enums.UserRole
 import dev.abdullah.messseat.presentation.auth.AuthEvent
 import dev.abdullah.messseat.presentation.auth.BaseAuthViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

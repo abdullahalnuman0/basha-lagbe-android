@@ -15,7 +15,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.presentation.auth.signup.SignupUiState
 
 @Composable
@@ -36,7 +37,7 @@ internal fun BasicInfoSection(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Let's get started",
             subtitle = "Tell us a little about yourself to create your account."
         )

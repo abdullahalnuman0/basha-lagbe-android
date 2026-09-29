@@ -1,7 +1,5 @@
 package dev.abdullah.messseat.core.di
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,12 +8,13 @@ import dev.abdullah.messseat.BuildConfig
 import dev.abdullah.messseat.core.data.SessionManager
 import dev.abdullah.messseat.core.network.AuthInterceptor
 import dev.abdullah.messseat.core.network.TokenAuthenticator
-import dev.abdullah.messseat.data.api.AuthApi
 import dev.abdullah.messseat.data.api.RefreshApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.seconds
@@ -26,28 +25,36 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        explicitNulls = false
+        encodeDefaults = true
+    }
 
     @Provides
     @Singleton
     fun provideLogging(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC
         else HttpLoggingInterceptor.Level.NONE
     }
 
     @Provides
     @Singleton
     @Named("refresh")
-    fun provideRefreshRetrofit(moshi: Moshi, logging: HttpLoggingInterceptor): Retrofit =
-        Retrofit.Builder()
+    fun provideRefreshRetrofit(json: Json, logging: HttpLoggingInterceptor): Retrofit {
+        val contentType = "application/json".toMediaType()
+
+        return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(logging)
                     .build()
             )
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
 
     @Provides
     @Singleton
@@ -66,11 +73,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .client(client)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
+    fun provideRetrofit(client: OkHttpClient, json: Json): Retrofit {
+        val contentType = "application/json".toMediaType()
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(client)
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .build()
+    }
 
 
 }

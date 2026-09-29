@@ -52,7 +52,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.components.InlineMessage
 import dev.abdullah.messseat.presentation.auth.signup.PasswordRequirements
 import dev.abdullah.messseat.presentation.auth.signup.PasswordStrength
 import dev.abdullah.messseat.presentation.auth.signup.SignupUiState
@@ -76,7 +78,7 @@ internal fun SecuritySection(
     ) {
         Spacer(modifier = Modifier.height(4.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Secure your account",
             subtitle = "Create a strong password to protect yur account and data."
         )
@@ -166,7 +168,7 @@ private fun TermsConditionOption(
             )
         }
 
-        InlineErrorMessage(error=error)
+        InlineMessage(message = error, isError = true)
 
     }
 }

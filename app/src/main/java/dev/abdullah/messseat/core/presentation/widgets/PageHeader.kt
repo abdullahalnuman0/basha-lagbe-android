@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.presentation.auth.signup.components
+package dev.abdullah.messseat.core.presentation.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,16 +7,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun StepHeader(
+internal fun PageHeader(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
+    titleStyle: TextStyle? = null,
+    subtitleStyle: TextStyle? = null,
     textAlign: TextAlign? = null,
 ) {
 
@@ -27,7 +30,7 @@ internal fun StepHeader(
 
         Text(
             text = title,
-            style = MaterialTheme.typography.headlineLarge.copy(
+            style = titleStyle ?: MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.ExtraBold,
                 lineHeight = 36.sp
             ),
@@ -37,7 +40,7 @@ internal fun StepHeader(
 
         Text(
             text = subtitle,
-            style = MaterialTheme.typography.bodyMedium.copy(
+            style = subtitleStyle ?: MaterialTheme.typography.bodyMedium.copy(
                 lineHeight = 22.sp,
                 fontSize = 15.sp
             ),

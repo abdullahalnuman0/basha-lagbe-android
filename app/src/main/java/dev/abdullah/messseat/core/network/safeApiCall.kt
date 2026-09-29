@@ -1,9 +1,11 @@
 package dev.abdullah.messseat.core.network
 
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.IOException
+import kotlin.time.Duration.Companion.seconds
 
 suspend fun <T> safeApiCall(block: suspend () -> T): ApiResult<T> {
     return try {

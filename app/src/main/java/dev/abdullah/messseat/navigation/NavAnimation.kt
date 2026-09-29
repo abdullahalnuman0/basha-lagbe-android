@@ -12,33 +12,61 @@ import androidx.navigation.NavBackStackEntry
 class NavAnimation {
 }
 
-private const val DURATION = 600
+private const val NAV_DURATION = 600
+//private const val NAV_DURATION = 350
+private const val TAB_DURATION = 250
 
 fun enterPush(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
     slideIntoContainer(
         towards = AnimatedContentTransitionScope.SlideDirection.Left,
-        animationSpec = tween(DURATION)
-    ) + fadeIn(animationSpec = tween(DURATION))
+        animationSpec = tween(NAV_DURATION)
+    ) + fadeIn(animationSpec = tween(NAV_DURATION))
 
 }
 
 fun exitPush(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
     slideOutOfContainer(
         towards = AnimatedContentTransitionScope.SlideDirection.Left,
-        animationSpec = tween(DURATION)
-    ) + fadeOut(animationSpec = tween(DURATION))
+        animationSpec = tween(NAV_DURATION)
+    ) + fadeOut(animationSpec = tween(NAV_DURATION))
 }
 
 fun enterPop(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
     slideIntoContainer(
         towards = AnimatedContentTransitionScope.SlideDirection.Right,
-        animationSpec = tween(DURATION)
-    ) + fadeIn(animationSpec = tween(DURATION))
+        animationSpec = tween(NAV_DURATION)
+    ) + fadeIn(animationSpec = tween(NAV_DURATION))
 }
 
 fun exitPop(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
     slideOutOfContainer(
         towards = AnimatedContentTransitionScope.SlideDirection.Right,
-        animationSpec = tween(DURATION)
-    ) + fadeOut(animationSpec = tween(DURATION))
+        animationSpec = tween(NAV_DURATION)
+    ) + fadeOut(animationSpec = tween(NAV_DURATION))
+}
+
+private val easing = FastOutSlowInEasing
+
+fun tabEnter():
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
+
+    fadeIn(
+        animationSpec = tween(
+            durationMillis = 220,
+            easing = FastOutSlowInEasing
+        ),
+        initialAlpha = 0.85f
+    )
+}
+
+fun tabExit():
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
+
+    fadeOut(
+        animationSpec = tween(
+            durationMillis = 180,
+            easing = FastOutSlowInEasing
+        ),
+        targetAlpha = 0.95f
+    )
 }

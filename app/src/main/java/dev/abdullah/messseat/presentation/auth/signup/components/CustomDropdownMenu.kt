@@ -21,18 +21,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
-import androidx.compose.material3.MaterialTheme.colorScheme as color
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
+import androidx.compose.material3.MaterialTheme.colorScheme as colors
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CustomDropdownMenu(
+fun CustomDropdownMenu(
     modifier: Modifier = Modifier,
     label: String,
     subLabel: String? = null,
     value: String,
-    error: String?,
+    error: String?=null,
     placeholder: String,
     icon: Painter,
     isExpanded: Boolean,
@@ -58,8 +58,8 @@ internal fun CustomDropdownMenu(
         Text(
             text = label,
             style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold,
-                color = if (value.isNotEmpty() || isEnable) color.onBackground else color.onBackground.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = if (value.isNotEmpty() || isEnable) colors.onBackground else colors.onBackground.copy(
                     0.5f
                 )
             )
@@ -67,7 +67,11 @@ internal fun CustomDropdownMenu(
         if (value.isEmpty() && subLabel != null) {
             Text(
                 text = subLabel,
-                style = MaterialTheme.typography.bodySmall.copy(color = color.onBackground.copy(0.5f))
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = colors.onBackground.copy(
+                        0.5f
+                    )
+                )
             )
         }
     }
@@ -95,7 +99,7 @@ internal fun CustomDropdownMenu(
         ExposedDropdownMenu(
             expanded = isExpanded,
             onDismissRequest = onDismissRequest,
-            modifier = Modifier.background(color.surface)
+            modifier = Modifier.background(colors.surface)
         ) {
             values.forEach { item ->
                 DropdownMenuItem(
@@ -104,7 +108,7 @@ internal fun CustomDropdownMenu(
                             text = item,
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = if (value == item) FontWeight.Bold else FontWeight.Normal,
-                                color = if (value == item) color.primary else color.onSurface
+                                color = if (value == item) colors.primary else colors.onSurface
                             )
                         )
                     },

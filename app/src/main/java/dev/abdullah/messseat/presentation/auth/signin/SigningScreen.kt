@@ -50,9 +50,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abdullah.messseat.R
 import dev.abdullah.messseat.presentation.auth.AuthEvent
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.presentation.auth.otp.HeaderLogo
-import dev.abdullah.messseat.presentation.auth.signup.components.StepHeader
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
 import androidx.compose.material3.MaterialTheme.colorScheme as color
 
 
@@ -127,7 +127,7 @@ fun SigningScreen(
 
             HeaderLogo()
 
-            StepHeader(
+            PageHeader(
                 title = "Welcome Back",
                 subtitle = "Login to find or rent your perfect home or mess",
                 textAlign = TextAlign.Center

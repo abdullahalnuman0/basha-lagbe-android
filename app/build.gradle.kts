@@ -3,12 +3,11 @@ import com.android.builder.compiling.BuildConfigType
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization) // Kotlin Serialization
 
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 
-    // Kotlin Serialization
-    id("kotlinx-serialization")
 }
 
 android {
@@ -79,17 +78,21 @@ dependencies {
 
     // --- Netword ---
     implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
+    // --- Kotlin Serialization ---
+    implementation(libs.kotlinx.serialization)
 
     // Persistence (tokens, theme, language)
     implementation(libs.androidx.datastore.preferences)
 
     // Splash screen
     implementation(libs.androidx.core.splashscreen)
+
+    // image
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 
 }

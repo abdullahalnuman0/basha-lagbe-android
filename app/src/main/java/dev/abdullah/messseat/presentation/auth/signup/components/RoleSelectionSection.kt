@@ -38,8 +38,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.domain.model.UserRole
-import androidx.compose.material3.MaterialTheme.colorScheme as color
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
+import dev.abdullah.messseat.domain.enums.UserRole
+import androidx.compose.material3.MaterialTheme.colorScheme as colors
 
 @Composable
 internal fun RoleSelectionSection(
@@ -56,7 +57,7 @@ internal fun RoleSelectionSection(
 
         Spacer(Modifier.height(4.dp))
 
-        StepHeader(
+        PageHeader(
             title = "What are you looking tor?",
             subtitle = "Choose how you want to user ${stringResource(R.string.app_name)} to get the best experience."
         )
@@ -87,7 +88,7 @@ private fun RoleSelectableCard(
 ) {
 
     val borderColor by animateColorAsState(
-        targetValue = if (isSelected) color.primary else Color.Unspecified,
+        targetValue = if (isSelected) colors.primary else Color.Transparent,
         animationSpec = tween(200),
         label = "borderColor"
     )
@@ -114,7 +115,7 @@ private fun RoleSelectableCard(
                 shape = RoundedCornerShape(32.dp)
             ),
         shape = RoundedCornerShape(32.dp),
-        colors = CardDefaults.cardColors(containerColor = color.surface),
+        colors = CardDefaults.cardColors(containerColor = colors.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = cardElevation),
         onClick = onClick
     ) {
@@ -136,13 +137,13 @@ private fun RoleSelectableCard(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(if (isSelected) color.primaryContainer else color.background),
+                        .background(if (isSelected) colors.primaryContainer else colors.background),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         role.icon,
                         role.title,
-                        tint = if (isSelected) color.primary else color.secondary,
+                        tint = if (isSelected) colors.primary else colors.secondary,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -153,7 +154,7 @@ private fun RoleSelectableCard(
                         modifier = Modifier
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(color.primary),
+                            .background(colors.primary),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -179,7 +180,7 @@ private fun RoleSelectableCard(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.5.sp,
                     fontSize = 11.sp,
-                    color = if (isSelected) color.primary else color.onSurface
+                    color = if (isSelected) colors.primary else colors.onSurface
                 ),
                 modifier = Modifier.alpha(textAlpha)
             )

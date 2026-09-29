@@ -1,6 +1,6 @@
 package dev.abdullah.messseat.data.mapper
 
-import dev.abdullah.messseat.domain.model.Gender as DomainGender
+import dev.abdullah.messseat.domain.enums.Gender as DomainGender
 import dev.abdullah.messseat.data.enums.Gender as DataGender
 
 // --- Data -> Domain ---

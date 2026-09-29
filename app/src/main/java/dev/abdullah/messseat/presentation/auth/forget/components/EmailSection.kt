@@ -10,15 +10,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.presentation.auth.AuthInputTextField
-import dev.abdullah.messseat.presentation.auth.forget.ForgetPwdStep
+import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.presentation.auth.forget.ForgetPwdUiState
-import dev.abdullah.messseat.presentation.auth.signup.components.StepHeader
+import dev.abdullah.messseat.core.presentation.widgets.PageHeader
 
 @Composable
 internal fun EmailSection(
@@ -35,7 +33,7 @@ internal fun EmailSection(
 
         Spacer(Modifier.height(48.dp))
 
-        StepHeader(
+        PageHeader(
             title = "Forget Password",
             subtitle = "Enter the email address linked to yur account and we'll send you a verification code"
         )

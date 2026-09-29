@@ -1,7 +1,7 @@
 package dev.abdullah.messseat.presentation.auth.signup
 
-import dev.abdullah.messseat.domain.model.Gender
-import dev.abdullah.messseat.domain.model.UserRole
+import dev.abdullah.messseat.domain.enums.Gender
+import dev.abdullah.messseat.domain.enums.UserRole
 
 data class SignupUiState(
     val currentStep: SignupStep = SignupStep.ROLE_SELECTION,
