@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.features.common.settings
+package dev.abdullah.messseat.features.shared.settings
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

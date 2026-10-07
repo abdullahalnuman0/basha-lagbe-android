@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,14 +12,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +38,7 @@ import dev.abdullah.messseat.navigation.OwnerRoute
 import dev.abdullah.messseat.features.owner.home.components.ListingItem
 import dev.abdullah.messseat.features.owner.home.components.ListingItemBtns
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
-import dev.abdullah.messseat.navigation.CommonRoute
+import dev.abdullah.messseat.navigation.SharedRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
@@ -64,12 +60,13 @@ fun ListingsScreen(
     Box(modifier.fillMaxSize()) {
         Column(modifier = modifier.fillMaxSize()) {
             AppTopBar(
-                title = "My Listings", appIcon = true,
+                title = "Listings",
+                subTitle = "Your listings",
                 actions = {
                     AccountDropdownOption(
                         user = user,
                         size = 40.dp,
-                        onProfile = {onNavigate(CommonRoute.User)},
+                        onProfile = {onNavigate(SharedRoute.User)},
                         loggedOut = loggedOut
                     )
                 }

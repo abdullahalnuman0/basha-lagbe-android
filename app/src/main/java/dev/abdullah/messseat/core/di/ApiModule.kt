@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.abdullah.messseat.data.api.AuthApi
+import dev.abdullah.messseat.data.api.ChatApi
 import dev.abdullah.messseat.data.api.FileApi
 import dev.abdullah.messseat.data.api.PropertyApi
 import dev.abdullah.messseat.data.api.RefreshApi
@@ -36,4 +37,8 @@ object ApiModule {
     @Provides
     @Singleton
     fun tenantApi(r: Retrofit): TenantApi = r.create(TenantApi::class.java)
+
+    @Provides
+    @Singleton
+    fun chatApi(r: Retrofit): ChatApi = r.create(ChatApi::class.java)
 }

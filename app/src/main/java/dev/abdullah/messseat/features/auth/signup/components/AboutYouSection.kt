@@ -30,8 +30,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Apartment
 import androidx.compose.material.icons.outlined.RadioButtonUnchecked
 import androidx.compose.material.icons.outlined.School
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -49,10 +47,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -63,7 +59,7 @@ import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.core.presentation.components.InlineMessage
 import dev.abdullah.messseat.features.auth.signup.LocationData
 import dev.abdullah.messseat.features.auth.signup.SignupUiState
-import dev.abdullah.messseat.features.common.settings.components.SectionCard
+import dev.abdullah.messseat.features.shared.settings.components.SectionCard
 import dev.abdullah.messseat.ui.theme.AppThemeExt
 import androidx.compose.material3.MaterialTheme.colorScheme as color
 

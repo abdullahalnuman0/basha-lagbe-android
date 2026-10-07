@@ -49,14 +49,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import dev.abdullah.messseat.R
-import dev.abdullah.messseat.core.presentation.components.AppCard
-import dev.abdullah.messseat.core.presentation.components.AppDivider
 import dev.abdullah.messseat.core.utils.toImageUrl
 import dev.abdullah.messseat.core.utils.toMoney
 import dev.abdullah.messseat.data.enums.PropertyGender
 import dev.abdullah.messseat.data.enums.PropertyType
 import dev.abdullah.messseat.data.enums.RoomType
-import dev.abdullah.messseat.features.common.settings.components.SectionCard
+import dev.abdullah.messseat.features.shared.settings.components.SectionCard
 import dev.abdullah.messseat.features.owner.home.components.ListingItemClip
 import dev.abdullah.messseat.features.owner.home.components.PendingAlert
 import dev.abdullah.messseat.ui.theme.Space

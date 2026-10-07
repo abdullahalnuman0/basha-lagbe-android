@@ -1,6 +1,5 @@
 package dev.abdullah.messseat.navigation
 
-import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -38,13 +37,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.abdullah.messseat.data.dto.property.PropertyResponse
 import dev.abdullah.messseat.domain.model.User
-import dev.abdullah.messseat.features.common.settings.SettingsScreen
-import dev.abdullah.messseat.features.common.user.UserScreen
+import dev.abdullah.messseat.features.shared.settings.SettingsScreen
+import dev.abdullah.messseat.features.shared.user.UserScreen
 import dev.abdullah.messseat.navigation.navtype.propertyResponseNavType
 import dev.abdullah.messseat.features.owner.home.HomeScreen
 import dev.abdullah.messseat.features.owner.listings.ListingsScreen
 import dev.abdullah.messseat.features.owner.property_add_edit.PropertyEditorScreen
 import dev.abdullah.messseat.features.owner.property_details.PropertyDetailsScreen
+import dev.abdullah.messseat.features.shared.chat.ChatScreen
+import dev.abdullah.messseat.features.shared.conversation.ConversationScreen
 import kotlin.reflect.typeOf
 
 @Composable
@@ -116,6 +117,14 @@ fun OwnerNavHost(modifier: Modifier = Modifier, user: User?, loggedOut: () -> Un
                 )
             }
 
+            composable<SharedRoute.Chat> {
+                ChatScreen(
+                    user = user,
+                    onNavigate = ::navigate,
+                    loggedOut = loggedOut
+                )
+            }
+
             composable<OwnerRoute.Notifications>(
                 enterTransition = tabEnter(), exitTransition = tabExit(),
                 popEnterTransition = tabEnter(), popExitTransition = tabExit()
@@ -128,14 +137,14 @@ fun OwnerNavHost(modifier: Modifier = Modifier, user: User?, loggedOut: () -> Un
                 }
             }
 
-            composable<CommonRoute.Settings> {
+            composable<SharedRoute.Settings> {
                 SettingsScreen(
                     onNavigate = ::navigate
                 )
             }
 
             // --- Others Screens ---
-            composable <CommonRoute.User>{
+            composable <SharedRoute.User>{
                 UserScreen(
                     onBack = navController::popBackStack
                 )
@@ -166,6 +175,10 @@ fun OwnerNavHost(modifier: Modifier = Modifier, user: User?, loggedOut: () -> Un
                     },
                     onBack = navController::popBackStack
                 )
+            }
+
+            composable<SharedRoute.Conversation> {
+                ConversationScreen(onBack = navController::popBackStack)
             }
 
         }

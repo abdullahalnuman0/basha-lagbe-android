@@ -28,8 +28,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -54,7 +52,7 @@ import dev.abdullah.messseat.features.auth.AuthEvent
 import dev.abdullah.messseat.core.presentation.components.AuthInputTextField
 import dev.abdullah.messseat.features.auth.otp.HeaderLogo
 import dev.abdullah.messseat.core.presentation.widgets.PageHeader
-import dev.abdullah.messseat.features.common.settings.components.SectionCard
+import dev.abdullah.messseat.features.shared.settings.components.SectionCard
 import androidx.compose.material3.MaterialTheme.colorScheme as color
 
 

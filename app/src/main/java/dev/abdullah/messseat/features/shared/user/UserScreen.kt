@@ -1,12 +1,8 @@
-package dev.abdullah.messseat.features.common.user
+package dev.abdullah.messseat.features.shared.user
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,10 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.KeyboardBackspace
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.Email
@@ -28,8 +22,6 @@ import androidx.compose.material.icons.outlined.ModeEditOutline
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.School
-import androidx.compose.material.icons.outlined.Verified
-import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -43,15 +35,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abdullah.messseat.core.presentation.components.AppSpacer
@@ -60,7 +48,7 @@ import dev.abdullah.messseat.core.presentation.widgets.AppTopBar
 import dev.abdullah.messseat.core.utils.toImageUrl
 import dev.abdullah.messseat.data.enums.UserStatus
 import dev.abdullah.messseat.domain.model.User
-import dev.abdullah.messseat.features.common.settings.SettingsViewModel
+import dev.abdullah.messseat.features.shared.settings.SettingsViewModel
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable

@@ -1,13 +1,11 @@
 package dev.abdullah.messseat.features.tenant.room_details.components
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -15,19 +13,17 @@ import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.abdullah.messseat.core.presentation.components.AppSpacer
 import dev.abdullah.messseat.core.presentation.components.UserAvatar
 import dev.abdullah.messseat.core.utils.toImageUrl
-import dev.abdullah.messseat.features.common.settings.components.SectionCard
+import dev.abdullah.messseat.features.shared.settings.components.SectionCard
 import dev.abdullah.messseat.ui.theme.Space
 
 import androidx.compose.material3.MaterialTheme.colorScheme as colors
@@ -38,6 +34,7 @@ fun OwnerInfoCard(
     modifier: Modifier = Modifier,
     name: String,
     avatarUrl: String?,
+    isChatOpening: Boolean,
     onCall: () -> Unit,
     onChat: () -> Unit
 ) {
@@ -92,9 +89,13 @@ fun OwnerInfoCard(
                     contentColor = Color.White
                 )
             ) {
-                Icon(Icons.Outlined.ChatBubbleOutline, "Chat")
-                Spacer(Modifier.width(Space.xs))
-                Text("Chat")
+                if (isChatOpening) {
+                    CircularProgressIndicator(Modifier.size(16.dp), color = colors.onPrimary)
+                } else {
+                    Icon(Icons.Outlined.ChatBubbleOutline, "Chat")
+                    Spacer(Modifier.width(Space.xs))
+                    Text("Chat")
+                }
             }
 
         }

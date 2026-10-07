@@ -10,7 +10,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.abdullah.messseat.data.dto.property.PropertyResponse
 import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
-import dev.abdullah.messseat.navigation.OwnerRoute.Listings
 import kotlinx.serialization.Serializable
 
 interface NavRoute
@@ -30,12 +29,19 @@ sealed interface AuthRoute : NavRoute {
     data object ForgetPwd : AuthRoute
 }
 
-sealed interface CommonRoute : NavRoute {
+sealed interface SharedRoute : NavRoute {
     @Serializable
-    data object Settings : CommonRoute
+    data object Settings : SharedRoute
 
     @Serializable
-    data object User : CommonRoute
+    data object User : SharedRoute
+
+    @Serializable
+    data object Chat : SharedRoute
+
+    @Serializable
+    data class Conversation(val id: Long) : SharedRoute
+
 }
 
 sealed interface TenantRoute : NavRoute {
@@ -44,10 +50,6 @@ sealed interface TenantRoute : NavRoute {
 
     @Serializable
     data object Search : TenantRoute
-
-    @Serializable
-    data object Chat : TenantRoute
-
 
     // --- others routes ---
     @Serializable
@@ -58,8 +60,8 @@ sealed interface TenantRoute : NavRoute {
         val TABS = setOf(
             BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
             BottomNavItem("Search", Icons.Outlined.Search, Search),
-            BottomNavItem("Chat", Icons.Outlined.ChatBubble, Chat),
-            BottomNavItem("Settings", Icons.Outlined.Settings, CommonRoute.Settings),
+            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat),
+            BottomNavItem("Settings", Icons.Outlined.Settings, SharedRoute.Settings),
         )
 
         fun showBottom(currentRoute: String?) = TABS.any { item ->
@@ -92,8 +94,9 @@ sealed interface OwnerRoute : NavRoute {
         val TABS = setOf(
             BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
             BottomNavItem("Listing", Icons.Outlined.LocationCity, Listings),
-            BottomNavItem("Notifications", Icons.Outlined.Notifications, Notifications),
-            BottomNavItem("Settings", Icons.Outlined.Settings, CommonRoute.Settings),
+            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat),
+//            BottomNavItem("Notifications", Icons.Outlined.Notifications, Notifications),
+            BottomNavItem("Settings", Icons.Outlined.Settings, SharedRoute.Settings),
         )
 
         fun showBottom(currentRoute: String?) = TABS.any { item ->

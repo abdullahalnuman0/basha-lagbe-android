@@ -25,7 +25,7 @@ import dev.abdullah.messseat.features.owner.home.components.HomeShimmer
 import dev.abdullah.messseat.features.owner.home.components.DashboardInfoSection
 import dev.abdullah.messseat.core.presentation.widgets.RoomItemCard
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
-import dev.abdullah.messseat.navigation.CommonRoute
+import dev.abdullah.messseat.navigation.SharedRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
@@ -47,7 +47,7 @@ fun HomeScreen(
                 AccountDropdownOption(
                     user = user,
                     size = 40.dp,
-                    onProfile = { onNavigate(CommonRoute.User) },
+                    onProfile = { onNavigate(SharedRoute.User) },
                     loggedOut = loggedOut
                 )
             }

@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.features.common.settings.components
+package dev.abdullah.messseat.features.shared.settings.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column

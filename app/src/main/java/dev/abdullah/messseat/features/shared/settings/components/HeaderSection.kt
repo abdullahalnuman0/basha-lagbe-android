@@ -1,4 +1,4 @@
-package dev.abdullah.messseat.features.common.settings.components
+package dev.abdullah.messseat.features.shared.settings.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.abdullah.messseat.BuildConfig
 import dev.abdullah.messseat.core.data.SessionManager
 import dev.abdullah.messseat.core.network.AuthInterceptor
+import dev.abdullah.messseat.core.network.StompClient
 import dev.abdullah.messseat.core.network.TokenAuthenticator
 import dev.abdullah.messseat.data.api.RefreshApi
 import kotlinx.serialization.json.Json
@@ -34,8 +35,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideStompClient(): StompClient = StompClient()
+
+    @Provides
+    @Singleton
     fun provideLogging(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC
+        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
         else HttpLoggingInterceptor.Level.NONE
     }
 

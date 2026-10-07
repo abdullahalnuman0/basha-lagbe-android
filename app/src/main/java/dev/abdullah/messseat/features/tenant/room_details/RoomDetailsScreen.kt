@@ -16,10 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardBackspace
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,16 +34,18 @@ import dev.abdullah.messseat.core.presentation.components.LocalSnackbar
 import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
 import dev.abdullah.messseat.features.owner.property_details.components.PropertyAbout
 import dev.abdullah.messseat.features.owner.property_details.components.PropertyFacilities
-import dev.abdullah.messseat.features.owner.property_details.components.PropertyLocationContact
 import dev.abdullah.messseat.features.tenant.room_details.components.HeaderSection
 import dev.abdullah.messseat.features.tenant.room_details.components.OwnerInfoCard
 import dev.abdullah.messseat.features.tenant.room_details.components.RoomBasicInfo
+import dev.abdullah.messseat.navigation.SharedRoute
+import dev.abdullah.messseat.navigation.NavRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
 fun RoomDetailsScreen(
     modifier: Modifier = Modifier,
     room: RoomTenantResponse,
+    onNavigate: (NavRoute) -> Unit,
     onBack: () -> Unit,
     vm: RoomDetailsViewModel = hiltViewModel()
 ) {
@@ -56,6 +55,7 @@ fun RoomDetailsScreen(
     }
 
     val isFavorite by vm.isFavorite.collectAsStateWithLifecycle()
+    val isChatOpening by vm.isChatOpening.collectAsStateWithLifecycle()
     val snackbar = LocalSnackbar.current
 
     Box(modifier.fillMaxSize()) {
@@ -131,8 +131,13 @@ fun RoomDetailsScreen(
                 OwnerInfoCard(
                     name = room.ownerName,
                     avatarUrl = room.ownerAvatarUrl,
+                    isChatOpening = isChatOpening,
                     onCall = {},
-                    onChat = {}
+                    onChat = {
+                        vm.openChat(
+                            onChat = { onNavigate(SharedRoute.Conversation(it)) },
+                            onError = { snackbar.showWithAction(it) })
+                    }
                 )
 
                 PropertyFacilities(

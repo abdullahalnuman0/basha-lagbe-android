@@ -24,7 +24,7 @@ import dev.abdullah.messseat.domain.model.User
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
 import dev.abdullah.messseat.features.tenant.home.components.CampusSafeSpaceCard
 import dev.abdullah.messseat.features.tenant.home.components.NearByLabel
-import dev.abdullah.messseat.navigation.CommonRoute
+import dev.abdullah.messseat.navigation.SharedRoute
 import dev.abdullah.messseat.navigation.NavRoute
 import dev.abdullah.messseat.navigation.TenantRoute
 import dev.abdullah.messseat.ui.theme.Space
@@ -50,7 +50,7 @@ fun HomeScreen(
                 AccountDropdownOption(
                     user = user,
                     size = 32.dp,
-                    onProfile =  {onNavigate(CommonRoute.User)},
+                    onProfile =  {onNavigate(SharedRoute.User)},
                     loggedOut = loggedOut
                 )
             }
