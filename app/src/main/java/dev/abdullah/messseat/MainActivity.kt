@@ -1,6 +1,7 @@
 package dev.abdullah.messseat
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -31,6 +32,9 @@ import dev.abdullah.messseat.domain.model.User
 import dev.abdullah.messseat.navigation.AuthNavHost
 import dev.abdullah.messseat.navigation.OwnerNavHost
 import dev.abdullah.messseat.navigation.TenantNavHost
+import dev.abdullah.messseat.ui.theme.DarkExtended
+import dev.abdullah.messseat.ui.theme.LightExtended
+import dev.abdullah.messseat.ui.theme.LocalExtendedColors
 import dev.abdullah.messseat.ui.theme.MessSeatTheme
 
 
@@ -79,7 +83,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            MessSeatTheme {
+            MessSeatTheme (dark){
                 val scope = rememberCoroutineScope()
                 val snackbarHostState = remember { SnackbarHostState() }
                 val loggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
@@ -87,17 +91,30 @@ class MainActivity : ComponentActivity() {
 
 
                 CompositionLocalProvider(
-                    LocalSnackbar provides SnackbarController(snackbarHostState, scope)
+                    LocalSnackbar provides SnackbarController(snackbarHostState, scope),
+                    LocalExtendedColors provides if (dark) DarkExtended else LightExtended
                 ) {
                     Box(Modifier.fillMaxSize()) {
                         RootNavGraph(
                             loggedIn = loggedIn,
-                            loggedOut = viewModel::loggedOut,
+                            loggedOut = {
+                                viewModel.loggedOut {
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        "Successfully Logged Out.",
+                                        Toast.LENGTH_LONG
+                                    )
+                                        .show()
+                                }
+                            },
                             user = user
                         )
 
-                        SnackbarHost(snackbarHostState, Modifier.align(Alignment.BottomCenter)
-                            .navigationBarsPadding())
+                        SnackbarHost(
+                            snackbarHostState, Modifier
+                                .align(Alignment.BottomCenter)
+                                .navigationBarsPadding()
+                        )
                     }
                 }
 
@@ -116,7 +133,7 @@ fun RootNavGraph(
     if (loggedIn)
         user?.let {
             when {
-                it.roles.contains(Role.OWNER) -> OwnerNavHost(loggedOut = loggedOut)
+                it.roles.contains(Role.OWNER) -> OwnerNavHost(user = user, loggedOut = loggedOut)
                 it.roles.contains(Role.TENANT) -> TenantNavHost(user = user, loggedOut = loggedOut)
             }
         }

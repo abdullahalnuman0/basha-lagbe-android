@@ -19,6 +19,9 @@ class SnackbarController(
     ) {
         scope.launch { hostState.showSnackbar(msg, actionLabel, withDismissAction, duration) }
     }
+
+    fun showWithAction(msg: String) =
+        scope.launch { hostState.showSnackbar(msg, withDismissAction = true, duration = SnackbarDuration.Long) }
 }
 
 val LocalSnackbar = staticCompositionLocalOf<SnackbarController> {

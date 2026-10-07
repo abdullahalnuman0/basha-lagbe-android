@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.abdullah.messseat.data.dto.auth.AuthResponse
 import dev.abdullah.messseat.data.dto.user.UserResponse
+import dev.abdullah.messseat.domain.model.User
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -29,11 +30,20 @@ class SessionManager(
     @Volatile
     private var refresh: String? = null
 
+    @Volatile
+    private var user: User? = null
+
     init {
         runBlocking {
             val prefs = dataStore.data.first()
             access = prefs[Keys.ACCESS]
             refresh = prefs[Keys.REFRESH]
+            user = prefs[Keys.USER]?.let {
+                runCatching {
+                    json.decodeFromString<UserResponse>(it)
+                        .toDomain()
+                }.getOrNull()
+            }
         }
     }
 
@@ -53,9 +63,12 @@ class SessionManager(
     fun accessToken() = access
     fun refreshToken() = refresh
 
+    fun user() = user
+
     suspend fun saveSession(auth: AuthResponse) {
         access = auth.accessToken
         refresh = auth.refreshToken
+        user = auth.user.toDomain()
 
         dataStore.edit { prefs ->
             prefs[Keys.ACCESS] = auth.accessToken

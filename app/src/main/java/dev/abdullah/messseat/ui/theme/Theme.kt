@@ -8,6 +8,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
@@ -35,6 +38,8 @@ private val DarkColorScheme =
 
         surfaceVariant = Color(0xFF334155),
         onSurfaceVariant = Color(0xFFC0CCC9),
+
+        surfaceContainer = Color(0xFF181829),
 
         error = Color(0xFFFFB4AB),
         onError = Color(0xFF690005),
@@ -70,6 +75,8 @@ private val LightColorScheme =
         surfaceVariant = Color(0xFFDCE5E2),
         onSurfaceVariant = Color(0xFF404947),
 
+        surfaceContainer = Color(0xFFFFFFFF),
+
         error = Color(0xFFBA1A1A),
         onError = Color(0xFFFFFFFF),
 
@@ -78,10 +85,40 @@ private val LightColorScheme =
 
         outline = Color(0xFF707976)
     )
+@Immutable
+data class ExtendedColors(
+    val success: Color,
+    val warning: Color,
+    val danger: Color,
+    val accent: Color,
+    val cardBorder: Color,
+    val track: Color,
+    val isDark: Boolean,
+)
+
+ val DarkExtended = ExtendedColors(
+    success = MintBright,
+    warning = AmberBright,
+    danger = DangerBright,
+    accent = Coral,
+    cardBorder = Color.White.copy(alpha = 0.06f),
+    track = Color.White.copy(alpha = 0.08f),
+    isDark = true,
+)
+
+ val LightExtended = ExtendedColors(
+    success = Mint,
+    warning = Amber,
+    danger = Danger,
+    accent = Color(0xFFE0507A),
+    cardBorder = Color(0xFF16162A).copy(alpha = 0.06f),
+    track = Color(0xFF16162A).copy(alpha = 0.08f),
+    isDark = false,
+)
 
 @Composable
 fun MessSeatTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
@@ -101,4 +138,11 @@ fun MessSeatTheme(
         typography = Typography,
         content = content
     )
+}
+
+val LocalExtendedColors = staticCompositionLocalOf { DarkExtended }
+
+object AppThemeExt {
+    val colors: ExtendedColors
+        @Composable get() = LocalExtendedColors.current
 }

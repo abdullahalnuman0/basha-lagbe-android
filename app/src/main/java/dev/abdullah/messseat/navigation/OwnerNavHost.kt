@@ -37,15 +37,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.abdullah.messseat.data.dto.property.PropertyResponse
+import dev.abdullah.messseat.domain.model.User
+import dev.abdullah.messseat.features.common.settings.SettingsScreen
+import dev.abdullah.messseat.features.common.user.UserScreen
 import dev.abdullah.messseat.navigation.navtype.propertyResponseNavType
-import dev.abdullah.messseat.presentation.owner.home.HomeScreen
-import dev.abdullah.messseat.presentation.owner.listings.ListingsScreen
-import dev.abdullah.messseat.presentation.owner.property_add_edit.PropertyEditorScreen
-import dev.abdullah.messseat.presentation.owner.property_details.PropertyDetailsScreen
+import dev.abdullah.messseat.features.owner.home.HomeScreen
+import dev.abdullah.messseat.features.owner.listings.ListingsScreen
+import dev.abdullah.messseat.features.owner.property_add_edit.PropertyEditorScreen
+import dev.abdullah.messseat.features.owner.property_details.PropertyDetailsScreen
 import kotlin.reflect.typeOf
 
 @Composable
-fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
+fun OwnerNavHost(modifier: Modifier = Modifier, user: User?, loggedOut: () -> Unit) {
 
     val navController = rememberNavController()
     val backStack by navController.currentBackStackEntryAsState()
@@ -69,6 +72,7 @@ fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
         bottomBar = {
             if (OwnerRoute.showBottom(currentRoute))
                 BottomNavigation(
+                    navItems = OwnerRoute.TABS,
                     currentRoute = currentRoute,
                     onNavigate = ::navigateBottom
                 )
@@ -94,12 +98,10 @@ fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
                 popEnterTransition = tabEnter(), popExitTransition = tabExit()
             ) {
                 HomeScreen(
+                    user = user,
                     onNavigateBottom = ::navigateBottom,
                     onNavigate = ::navigate,
-                    loggedOut = {
-                        Log.i("LogoutFind", "---------------")
-                        //loggedOut
-                    }
+                    loggedOut = loggedOut
                 )
             }
 
@@ -108,7 +110,9 @@ fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
                 popEnterTransition = tabEnter(), popExitTransition = tabExit()
             ) {
                 ListingsScreen(
-                    onNavigate = ::navigate
+                    user = user,
+                    onNavigate = ::navigate,
+                    loggedOut = loggedOut
                 )
             }
 
@@ -124,7 +128,19 @@ fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
                 }
             }
 
+            composable<CommonRoute.Settings> {
+                SettingsScreen(
+                    onNavigate = ::navigate
+                )
+            }
+
             // --- Others Screens ---
+            composable <CommonRoute.User>{
+                UserScreen(
+                    onBack = navController::popBackStack
+                )
+            }
+
             composable<OwnerRoute.Editor>(
                 typeMap = mapOf(typeOf<PropertyResponse?>() to propertyResponseNavType)
             ) {
@@ -160,7 +176,8 @@ fun OwnerNavHost(modifier: Modifier = Modifier, loggedOut: () -> Unit) {
 
 
 @Composable
-private fun BottomNavigation(
+fun BottomNavigation(
+    navItems: Set<BottomNavItem>,
     currentRoute: String?,
     onNavigate: (NavRoute) -> Unit   // route এখন String
 ) {
@@ -182,7 +199,7 @@ private fun BottomNavigation(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            OwnerRoute.TABS.forEach { item ->
+            navItems.forEach { item ->
                 BottomNavigationItem(
                     item = item,
                     isSelected = currentRoute == item.routeName,

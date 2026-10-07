@@ -17,8 +17,8 @@ class PreferencesManager(
     }
 
     val themeMode: Flow<ThemeMode> = dataStore.data.map { prefs ->
-        runCatching { ThemeMode.valueOf(prefs[Keys.THEME] ?: ThemeMode.SYSTEM.name) }
-            .getOrDefault(ThemeMode.SYSTEM)
+        runCatching { ThemeMode.valueOf(prefs[Keys.THEME] ?: ThemeMode.LIGHT.name) }
+            .getOrDefault(ThemeMode.LIGHT)
     }
 
     suspend fun setThemeMode(mode: ThemeMode) = dataStore.edit { prefs ->

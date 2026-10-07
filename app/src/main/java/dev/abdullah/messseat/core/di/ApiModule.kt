@@ -8,6 +8,7 @@ import dev.abdullah.messseat.data.api.AuthApi
 import dev.abdullah.messseat.data.api.FileApi
 import dev.abdullah.messseat.data.api.PropertyApi
 import dev.abdullah.messseat.data.api.RefreshApi
+import dev.abdullah.messseat.data.api.TenantApi
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -31,4 +32,8 @@ object ApiModule {
     @Provides
     @Singleton
     fun propertyAPi(r: Retrofit): PropertyApi = r.create(PropertyApi::class.java)
+
+    @Provides
+    @Singleton
+    fun tenantApi(r: Retrofit): TenantApi = r.create(TenantApi::class.java)
 }

@@ -6,10 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import dev.abdullah.messseat.presentation.auth.forget.ForgetPwdScreen
-import dev.abdullah.messseat.presentation.auth.otp.OtpScreen
-import dev.abdullah.messseat.presentation.auth.signin.SigningScreen
-import dev.abdullah.messseat.presentation.auth.signup.SignupScreen
+import dev.abdullah.messseat.features.auth.forget.ForgetPwdScreen
+import dev.abdullah.messseat.features.auth.otp.OtpScreen
+import dev.abdullah.messseat.features.auth.signin.SigningScreen
+import dev.abdullah.messseat.features.auth.signup.SignupScreen
 
 @Composable
 fun AuthNavHost(modifier: Modifier = Modifier) {

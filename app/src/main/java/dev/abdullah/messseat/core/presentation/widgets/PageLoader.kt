@@ -4,9 +4,11 @@ import dev.abdullah.messseat.core.network.ApiResult
 import dev.abdullah.messseat.data.common.PageResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 sealed interface UiState<out T> {
     data object Loading : UiState<Nothing>

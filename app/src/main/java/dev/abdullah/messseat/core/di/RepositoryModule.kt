@@ -10,9 +10,11 @@ import dev.abdullah.messseat.core.data.SessionManager
 import dev.abdullah.messseat.data.api.AuthApi
 import dev.abdullah.messseat.data.api.FileApi
 import dev.abdullah.messseat.data.api.PropertyApi
+import dev.abdullah.messseat.data.api.TenantApi
 import dev.abdullah.messseat.data.repository.AuthRepository
 import dev.abdullah.messseat.data.repository.FileRepository
 import dev.abdullah.messseat.data.repository.PropertyRepository
+import dev.abdullah.messseat.data.repository.TenantRepository
 import javax.inject.Singleton
 
 @Module
@@ -31,4 +33,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun propertyRepository(api: PropertyApi) = PropertyRepository(api)
+
+    @Provides
+    @Singleton
+    fun tenantRepository(api: TenantApi) = TenantRepository(api)
 }

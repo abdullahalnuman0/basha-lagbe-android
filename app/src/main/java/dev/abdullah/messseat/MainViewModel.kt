@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+open class MainViewModel @Inject constructor(
     private val preferences: PreferencesManager,
     private val session: SessionManager
 ) : ViewModel() {
@@ -26,8 +26,9 @@ class MainViewModel @Inject constructor(
     val user = session.userFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-    fun loggedOut() = viewModelScope.launch {
+    fun loggedOut(onSuccess: () -> Unit = {}) = viewModelScope.launch {
         session.clear()
+        onSuccess()
     }
 
     var ready: Boolean = false

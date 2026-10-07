@@ -1,11 +1,16 @@
 package dev.abdullah.messseat.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ChatBubble
 import androidx.compose.material.icons.outlined.Dashboard
 import androidx.compose.material.icons.outlined.LocationCity
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.abdullah.messseat.data.dto.property.PropertyResponse
+import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
+import dev.abdullah.messseat.navigation.OwnerRoute.Listings
 import kotlinx.serialization.Serializable
 
 interface NavRoute
@@ -25,15 +30,43 @@ sealed interface AuthRoute : NavRoute {
     data object ForgetPwd : AuthRoute
 }
 
-sealed interface UserRoute : NavRoute {
+sealed interface CommonRoute : NavRoute {
     @Serializable
-    data object Home : UserRoute
+    data object Settings : CommonRoute
 
     @Serializable
-    data object Chat : UserRoute
+    data object User : CommonRoute
+}
+
+sealed interface TenantRoute : NavRoute {
+    @Serializable
+    data object Home : TenantRoute
 
     @Serializable
-    data object Settings : UserRoute
+    data object Search : TenantRoute
+
+    @Serializable
+    data object Chat : TenantRoute
+
+
+    // --- others routes ---
+    @Serializable
+    data class RoomDetails(val room: RoomTenantResponse) : TenantRoute
+
+
+    companion object {
+        val TABS = setOf(
+            BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
+            BottomNavItem("Search", Icons.Outlined.Search, Search),
+            BottomNavItem("Chat", Icons.Outlined.ChatBubble, Chat),
+            BottomNavItem("Settings", Icons.Outlined.Settings, CommonRoute.Settings),
+        )
+
+        fun showBottom(currentRoute: String?) = TABS.any { item ->
+            item.routeName == currentRoute
+        }
+
+    }
 }
 
 sealed interface OwnerRoute : NavRoute {
@@ -60,6 +93,7 @@ sealed interface OwnerRoute : NavRoute {
             BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
             BottomNavItem("Listing", Icons.Outlined.LocationCity, Listings),
             BottomNavItem("Notifications", Icons.Outlined.Notifications, Notifications),
+            BottomNavItem("Settings", Icons.Outlined.Settings, CommonRoute.Settings),
         )
 
         fun showBottom(currentRoute: String?) = TABS.any { item ->
