@@ -6,6 +6,7 @@ import dev.abdullah.messseat.data.api.TenantApi
 import dev.abdullah.messseat.data.common.PageResponse
 import dev.abdullah.messseat.data.dto.tenant.PropertyTenantResponse
 import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
+import dev.abdullah.messseat.data.dto.tenant.SavedRoomsRequest
 
 class TenantRepository(
     private val api: TenantApi
@@ -26,5 +27,8 @@ class TenantRepository(
 
     suspend fun updateRoomView(id: Long) =
         safeApiCall { api.updateRoomView(id) }
+
+    suspend fun getSavedRooms(roomIds: List<Long>): ApiResult<List<RoomTenantResponse>> =
+        safeApiCall { api.getSavedRooms(SavedRoomsRequest(roomIds)) }
 
 }

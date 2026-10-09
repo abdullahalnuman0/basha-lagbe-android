@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abdullah.messseat.core.presentation.components.AppSpacer
+import dev.abdullah.messseat.core.presentation.components.LocalSnackbar
 import dev.abdullah.messseat.core.presentation.components.UserAvatar
 import dev.abdullah.messseat.core.presentation.widgets.AppTopBar
 import dev.abdullah.messseat.core.utils.toImageUrl
@@ -60,6 +61,7 @@ fun UserScreen(
 
     val context = LocalContext.current
     val user by vm.user.collectAsStateWithLifecycle()
+    val snackbar  = LocalSnackbar.current
 
     Column(modifier.fillMaxSize()) {
 
@@ -67,7 +69,9 @@ fun UserScreen(
             title = "User profile",
             onBack = onBack,
             actions = {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    snackbar.showWithAction("This feature might or might not arrive, so enjoy the app's other features.😉")
+                }) {
                     Icon(Icons.Outlined.ModeEditOutline, "UpdateProfile",
                         Modifier.alpha(0.6f))
                 }

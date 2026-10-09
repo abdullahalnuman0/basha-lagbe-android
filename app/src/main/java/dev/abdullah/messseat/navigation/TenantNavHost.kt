@@ -165,7 +165,10 @@ fun TenantNavHost(
                     }
 
                     composable<TenantRoute.SavedPost> {
-                        SavedPostScreen()
+                        SavedPostScreen(
+                            onNavigate = ::navigate,
+                            onBack = navController::popBackStack
+                        )
                     }
 
                 }

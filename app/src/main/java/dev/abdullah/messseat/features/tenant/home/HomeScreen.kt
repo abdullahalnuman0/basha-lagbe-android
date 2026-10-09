@@ -21,6 +21,7 @@ import dev.abdullah.messseat.core.presentation.widgets.ShimmerList
 import dev.abdullah.messseat.core.presentation.widgets.UiState
 import dev.abdullah.messseat.core.utils.greeting
 import dev.abdullah.messseat.domain.model.User
+import dev.abdullah.messseat.features.tenant.home.components.AccommodateCategoriesSection
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
 import dev.abdullah.messseat.features.tenant.home.components.CampusSafeSpaceCard
 import dev.abdullah.messseat.features.tenant.home.components.NearByLabel
@@ -79,6 +80,9 @@ fun HomeScreen(
 
                     item {
                         CampusSafeSpaceCard { onNavigateBottom(TenantRoute.Search) }
+
+                        AppSpacer(Space.listGap)
+                        AccommodateCategoriesSection { onNavigateBottom(TenantRoute.Search) }
 
                         AppSpacer(Space.listGap)
                         NearByLabel { onNavigateBottom(TenantRoute.Search) }

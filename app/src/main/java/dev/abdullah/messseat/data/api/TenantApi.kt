@@ -3,7 +3,10 @@ package dev.abdullah.messseat.data.api
 import dev.abdullah.messseat.data.common.PageResponse
 import dev.abdullah.messseat.data.dto.tenant.PropertyTenantResponse
 import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
+import dev.abdullah.messseat.data.dto.tenant.SavedRoomsRequest
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
@@ -25,4 +28,7 @@ interface TenantApi {
 
     @PUT("tenant/rooms/{roomId}")
     suspend fun updateRoomView(@Path("roomId") id: Long)
+
+    @POST("tenant/rooms/saved")
+    suspend fun getSavedRooms(@Body body: SavedRoomsRequest): List<RoomTenantResponse>
 }

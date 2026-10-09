@@ -81,18 +81,21 @@ fun RoomBar(
                     imageVector = Icons.Default.ExpandLess,
                     contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
                         .rotate(90f)
                 )
             }
         } else {
-            SectionCard(
+            RoomBarContent(room = room) { expanded != expanded }
+            /*SectionCard(
                 modifier
                     .padding(horizontal = Space.sm)
                     .padding(top = Space.sm),
                 PaddingValues(0.dp),
                 onClick = { expanded = !expanded }
-            ) {
+            )
+            {
 
                 Row(
                     Modifier
@@ -143,7 +146,7 @@ fun RoomBar(
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }
