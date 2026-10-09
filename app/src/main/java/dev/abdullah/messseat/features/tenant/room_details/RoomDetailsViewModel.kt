@@ -1,12 +1,15 @@
 package dev.abdullah.messseat.features.tenant.room_details
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.abdullah.messseat.core.data.FavoritesManager
 import dev.abdullah.messseat.core.network.ApiResult
 import dev.abdullah.messseat.data.repository.ChatRepository
 import dev.abdullah.messseat.data.repository.TenantRepository
+import dev.abdullah.messseat.navigation.TenantRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,43 +20,61 @@ import javax.inject.Inject
 class RoomDetailsViewModel @Inject constructor(
     private val tenantRepo: TenantRepository,
     private val chatRepo: ChatRepository,
-    private val favorite: FavoritesManager
+    private val favorite: FavoritesManager,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    private val args = checkNotNull(savedStateHandle.toRoute<TenantRoute.RoomDetails>())
 
-    private val _isFavorite = MutableStateFlow(false)
-    val isFavorite = _isFavorite.asStateFlow()
+    private val _uiState = MutableStateFlow(RoomDetailsUiState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _isChatOpening = MutableStateFlow(false)
-    val isChatOpening = _isChatOpening.asStateFlow()
 
-    var roomId: Long? = null
+    init {
+       loadRoom()
+    }
 
-    fun updateRoomView(id: Long) {
+    fun loadRoom(){
         viewModelScope.launch {
-            roomId = id
-            _isFavorite.update { favorite.isFavorite(id) }
-            tenantRepo.updateRoomView(id)
+            when (val r = tenantRepo.findRoom(args.roomId)) {
+                is ApiResult.Success -> {
+                    _uiState.value = RoomDetailsUiState(
+                        roomId = args.roomId,
+                        room = r.data,
+                        isFavorite = favorite.isFavorite(args.roomId),
+                        isLoading = false
+                    )
+                }
+
+                is ApiResult.Error -> {
+                    _uiState.value = RoomDetailsUiState(
+                        roomId = args.roomId,
+                        error = r.message,
+                        isLoading = false
+                    )
+                }
+            }
         }
     }
 
+
     fun updateFavoriteState(done: (Boolean) -> Unit) {
         viewModelScope.launch {
-            roomId?.let { postId ->
-                if (isFavorite.value) favorite.removeFavorite(postId)
-                else favorite.addFavorite(postId)
-                _isFavorite.update { !isFavorite.value }
-                done(isFavorite.value)
+            _uiState.value.let { state ->
+                if (state.isFavorite) favorite.removeFavorite(state.roomId)
+                else favorite.addFavorite(state.roomId)
+                done(!state.isFavorite)
+                _uiState.update { it.copy(isFavorite = !state.isFavorite) }
             }
         }
     }
 
     fun openChat(onChat: (Long) -> Unit, onError: (String) -> Unit) = viewModelScope.launch {
-        _isChatOpening.update { true }
-        when (val r = chatRepo.open(roomId ?: 0)) {
+        _uiState.update { it.copy(isChatOpening = true) }
+        when (val r = chatRepo.open(_uiState.value.roomId)) {
             is ApiResult.Success -> onChat(r.data.id)
             is ApiResult.Error -> onError(r.message)
         }
-        _isChatOpening.update { false }
+        _uiState.update { it.copy(isChatOpening = true) }
     }
 
 }

@@ -1,5 +1,3 @@
-import com.android.builder.compiling.BuildConfigType
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -8,7 +6,14 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 
+    alias(libs.plugins.google.services) apply false
 }
+
+if (file("google-services.json").exists())
+    apply(plugin = "com.google.gms.google-services")
+else
+    logger.lifecycle("DoramEasy: google-services.json missing — push notifications are disabled in this build.")
+
 
 android {
     namespace = "dev.abdullah.messseat"
@@ -94,5 +99,12 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    // Push notifications. Drop app/google-services.json in and apply the
+    // com.google.gms.google-services plugin to activate delivery.
+    implementation(libs.firebase.messaging)
+
+    // For InAppNotificationHost
+    implementation("dev.chrisbanes.haze:haze:2.0.1")
+    implementation("dev.chrisbanes.haze:haze-blur:2.0.1")
 
 }

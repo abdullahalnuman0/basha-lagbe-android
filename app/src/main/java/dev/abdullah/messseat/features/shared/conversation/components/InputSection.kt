@@ -43,7 +43,6 @@ fun InputSection(
     Row(
         modifier
             .fillMaxWidth()
-//            .imePadding()
             .background(MaterialTheme.colorScheme.surface)
             .padding(Space.sm),
         verticalAlignment = Alignment.CenterVertically,

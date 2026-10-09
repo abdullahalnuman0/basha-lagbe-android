@@ -21,11 +21,13 @@ import dev.abdullah.messseat.core.presentation.widgets.EmptyBox
 import dev.abdullah.messseat.core.presentation.widgets.ErrorBox
 import dev.abdullah.messseat.core.presentation.widgets.ShimmerList
 import dev.abdullah.messseat.core.presentation.widgets.UiState
+import dev.abdullah.messseat.data.enums.Role
 import dev.abdullah.messseat.domain.model.User
 import dev.abdullah.messseat.features.shared.chat.components.ChatItemCard
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
 import dev.abdullah.messseat.navigation.NavRoute
 import dev.abdullah.messseat.navigation.SharedRoute
+import dev.abdullah.messseat.navigation.TenantRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
@@ -46,8 +48,13 @@ fun ChatScreen(
             actions = {
                 AccountDropdownOption(
                     user = user,
-                    size = 40.dp,
-                    onProfile = {onNavigate(SharedRoute.User)},
+                    onProfile = { onNavigate(SharedRoute.User) },
+                    onSaved = if (user?.roles?.contains(Role.OWNER) == true) {
+                        null
+                    } else {
+                        { onNavigate(TenantRoute.SavedPost) }
+                    },
+                    onNotification = { onNavigate(SharedRoute.Notification) },
                     loggedOut = loggedOut
                 )
             }

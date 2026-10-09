@@ -13,6 +13,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import dev.abdullah.messseat.features.tenant.home.components.CampusSafeSpaceCardColor
 
 private val DarkColorScheme =
     darkColorScheme(
@@ -85,6 +86,7 @@ private val LightColorScheme =
 
         outline = Color(0xFF707976)
     )
+
 @Immutable
 data class ExtendedColors(
     val success: Color,
@@ -93,26 +95,35 @@ data class ExtendedColors(
     val accent: Color,
     val cardBorder: Color,
     val track: Color,
+    val campusSafeCard: CampusSafeSpaceCardColor,
     val isDark: Boolean,
 )
 
- val DarkExtended = ExtendedColors(
+val DarkExtended = ExtendedColors(
     success = MintBright,
     warning = AmberBright,
     danger = DangerBright,
     accent = Coral,
     cardBorder = Color.White.copy(alpha = 0.06f),
     track = Color.White.copy(alpha = 0.08f),
+    campusSafeCard = CampusSafeSpaceCardColor(
+        Color(0xFF087265),
+        Color(0xFF1E1E4D)
+    ),// Teal/Green start | Deep Blue/Purple end
     isDark = true,
 )
 
- val LightExtended = ExtendedColors(
+val LightExtended = ExtendedColors(
     success = Mint,
     warning = Amber,
     danger = Danger,
     accent = Color(0xFFE0507A),
     cardBorder = Color(0xFF16162A).copy(alpha = 0.06f),
     track = Color(0xFF16162A).copy(alpha = 0.08f),
+    campusSafeCard = CampusSafeSpaceCardColor(
+        Color(0xFFF4F4F4),
+        Color(0xFFEAEDF0),
+    ),
     isDark = false,
 )
 

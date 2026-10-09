@@ -19,7 +19,6 @@ import androidx.compose.material.icons.automirrored.outlined.KeyboardBackspace
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,130 +30,137 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abdullah.messseat.core.presentation.components.LocalSnackbar
-import dev.abdullah.messseat.data.dto.tenant.RoomTenantResponse
+import dev.abdullah.messseat.core.presentation.widgets.ErrorBox
+import dev.abdullah.messseat.core.presentation.widgets.ShimmerList
 import dev.abdullah.messseat.features.owner.property_details.components.PropertyAbout
 import dev.abdullah.messseat.features.owner.property_details.components.PropertyFacilities
 import dev.abdullah.messseat.features.tenant.room_details.components.HeaderSection
 import dev.abdullah.messseat.features.tenant.room_details.components.OwnerInfoCard
 import dev.abdullah.messseat.features.tenant.room_details.components.RoomBasicInfo
-import dev.abdullah.messseat.navigation.SharedRoute
 import dev.abdullah.messseat.navigation.NavRoute
+import dev.abdullah.messseat.navigation.SharedRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
 fun RoomDetailsScreen(
     modifier: Modifier = Modifier,
-    room: RoomTenantResponse,
     onNavigate: (NavRoute) -> Unit,
     onBack: () -> Unit,
     vm: RoomDetailsViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(room) {
-        vm.updateRoomView(room.roomId)
-    }
+    val state by vm.uiState.collectAsStateWithLifecycle()
 
-    val isFavorite by vm.isFavorite.collectAsStateWithLifecycle()
-    val isChatOpening by vm.isChatOpening.collectAsStateWithLifecycle()
     val snackbar = LocalSnackbar.current
 
-    Box(modifier.fillMaxSize()) {
+    when {
+        state.isLoading -> ShimmerList()
 
-        Box(
-            modifier = Modifier
-                .zIndex(1f)
-                .padding(start = Space.xs, top = Space.xs)
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(
-                    MaterialTheme.colorScheme.surface.copy(alpha = 0.45f)
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.55f),
-                            Color.White.copy(alpha = 0.12f)
+        !state.isLoading && state.error != null -> ErrorBox(
+            message = state.error ?: "Something want wrong. Please try again.",
+            onRetry = vm::loadRoom
+        )
+
+        !state.isLoading && state.room != null -> state.room?.let { room ->
+            Box(modifier.fillMaxSize()) {
+
+                Box(
+                    modifier = Modifier
+                        .zIndex(1f)
+                        .padding(start = Space.xs, top = Space.xs)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(
+                            MaterialTheme.colorScheme.surface.copy(alpha = 0.45f)
                         )
-                    ),
-                    shape = CircleShape
-                )
-                .clickable { onBack() },
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Outlined.KeyboardBackspace,
-                contentDescription = "Back",
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        }
-
-
-
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
-                .verticalScroll(rememberScrollState())
-        ) {
-
-            HeaderSection(
-                images = room.images,
-                isSaved = isFavorite,
-                propertyType = room.propertyType,
-                gender = room.gender,
-                roomType = room.roomType,
-                rent = room.rent,
-                onFavorite = {
-                    vm.updateFavoriteState {
-                        snackbar.showWithAction(if (it) "Save post" else "Remove post")
-                    }
+                        .border(
+                            width = 1.dp,
+                            brush = Brush.linearGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = 0.55f),
+                                    Color.White.copy(alpha = 0.12f)
+                                )
+                            ),
+                            shape = CircleShape
+                        )
+                        .clickable { onBack() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.KeyboardBackspace,
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
                 }
-            )
 
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(Space.screen),
-                verticalArrangement = Arrangement.spacedBy(Space.listGap)
-            ) {
 
-                RoomBasicInfo(
-                    title = room.title,
-                    roomNumber = room.roomNumber,
-                    location = room.address,
-                    institutionNearby = room.institutionNearby,
-                    roomSize = "${room.roomWidth} x ${room.roomHeight}",
-                    totalSeats = room.availableSeats
-                )
 
-                OwnerInfoCard(
-                    name = room.ownerName,
-                    avatarUrl = room.ownerAvatarUrl,
-                    isChatOpening = isChatOpening,
-                    onCall = {},
-                    onChat = {
-                        vm.openChat(
-                            onChat = { onNavigate(SharedRoute.Conversation(it)) },
-                            onError = { snackbar.showWithAction(it) })
-                    }
-                )
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                        .verticalScroll(rememberScrollState())
+                ) {
 
-                PropertyFacilities(
-                    facilities = room.facilities,
-                    shape = RoundedCornerShape(16.dp)
-                )
-
-                if (room.description.isNotEmpty())
-                    PropertyAbout(
-                        desc = room.description,
-                        shape = RoundedCornerShape(16.dp)
+                    HeaderSection(
+                        images = room.images,
+                        isSaved = state.isFavorite,
+                        propertyType = room.propertyType,
+                        gender = room.gender,
+                        roomType = room.roomType,
+                        rent = room.rent,
+                        onFavorite = {
+                            vm.updateFavoriteState {
+                                snackbar.showWithAction(if (it) "Save post" else "Remove post")
+                            }
+                        }
                     )
 
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(Space.screen),
+                        verticalArrangement = Arrangement.spacedBy(Space.listGap)
+                    ) {
+
+                        RoomBasicInfo(
+                            title = room.title,
+                            roomNumber = room.roomNumber,
+                            location = room.address,
+                            institutionNearby = room.institutionNearby,
+                            roomSize = "${room.roomWidth} x ${room.roomHeight}",
+                            totalSeats = room.availableSeats
+                        )
+
+                        OwnerInfoCard(
+                            name = room.ownerName,
+                            avatarUrl = room.ownerAvatarUrl,
+                            isChatOpening = state.isChatOpening,
+                            onCall = {},
+                            onChat = {
+                                vm.openChat(
+                                    onChat = { onNavigate(SharedRoute.Conversation(it)) },
+                                    onError = { snackbar.showWithAction(it) })
+                            }
+                        )
+
+                        PropertyFacilities(
+                            facilities = room.facilities,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+
+                        if (room.description.isNotEmpty())
+                            PropertyAbout(
+                                desc = room.description,
+                                shape = RoundedCornerShape(16.dp)
+                            )
+
+                    }
+
+                }
+
             }
-
         }
-
     }
 
 }

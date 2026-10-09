@@ -6,5 +6,7 @@ plugins {
 
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hilt) apply false
+    // On the classpath only; :app applies it when google-services.json is present.
+    alias(libs.plugins.google.services) apply false
 
 }

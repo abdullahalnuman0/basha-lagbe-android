@@ -17,6 +17,7 @@ import dev.abdullah.messseat.data.enums.MessageType
 import dev.abdullah.messseat.data.repository.ChatRepository
 import dev.abdullah.messseat.data.repository.FileRepository
 import dev.abdullah.messseat.data.repository.TenantRepository
+import dev.abdullah.messseat.data.repository.UnreadCountRepository
 import dev.abdullah.messseat.navigation.SharedRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,6 +32,7 @@ class ConversationViewModel @Inject constructor(
     private val repo: ChatRepository,
     private val files: FileRepository,
     private val tenant: TenantRepository,
+    private val unreadRepo: UnreadCountRepository,
     session: SessionManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -112,12 +114,10 @@ class ConversationViewModel @Inject constructor(
 
             is ApiResult.Success -> {
                 repo.markRead(chatId)
+                // unread update
+                unreadRepo.updateChatCount()
 
-                ApiResult.Success(
-                    result.data.copy(
-                        content = result.data.content.reversed()
-                    )
-                )
+                ApiResult.Success(result.data.copy(content = result.data.content.reversed()))
             }
 
             is ApiResult.Error -> result

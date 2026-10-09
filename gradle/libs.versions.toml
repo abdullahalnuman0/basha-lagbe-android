@@ -26,6 +26,8 @@ coil = "3.6.2"
 
 splashscreen = "1.2.0"
 
+firebaseMessaging = "24.1.0"
+googleServices = "4.4.2"
 
 
 [libraries]
@@ -71,6 +73,9 @@ coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp"
 # Splash screen
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
+# Push notifications (requires app/google-services.json + the google-services plugin to activate)
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -79,3 +84,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+

@@ -26,6 +26,7 @@ import dev.abdullah.messseat.features.owner.home.components.DashboardInfoSection
 import dev.abdullah.messseat.core.presentation.widgets.RoomItemCard
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
 import dev.abdullah.messseat.navigation.SharedRoute
+import dev.abdullah.messseat.navigation.TenantRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
@@ -46,8 +47,8 @@ fun HomeScreen(
             actions = {
                 AccountDropdownOption(
                     user = user,
-                    size = 40.dp,
                     onProfile = { onNavigate(SharedRoute.User) },
+                    onNotification = { onNavigate(SharedRoute.Notification) },
                     loggedOut = loggedOut
                 )
             }
@@ -98,7 +99,7 @@ fun HomeScreen(
                             else -> lp
                         }
                         properties.forEach { property ->
-                            items(property.rooms) { room ->
+                            items(property.rooms, key = { it.id }) { room ->
                                 RoomItemCard(
                                     isOwnerView = true,
                                     images = room.images,

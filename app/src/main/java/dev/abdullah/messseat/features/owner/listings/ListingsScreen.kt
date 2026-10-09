@@ -39,6 +39,7 @@ import dev.abdullah.messseat.features.owner.home.components.ListingItem
 import dev.abdullah.messseat.features.owner.home.components.ListingItemBtns
 import dev.abdullah.messseat.features.tenant.home.components.AccountDropdownOption
 import dev.abdullah.messseat.navigation.SharedRoute
+import dev.abdullah.messseat.navigation.TenantRoute
 import dev.abdullah.messseat.ui.theme.Space
 
 @Composable
@@ -65,8 +66,8 @@ fun ListingsScreen(
                 actions = {
                     AccountDropdownOption(
                         user = user,
-                        size = 40.dp,
-                        onProfile = {onNavigate(SharedRoute.User)},
+                        onProfile = { onNavigate(SharedRoute.User) },
+                        onNotification = { onNavigate(SharedRoute.Notification) },
                         loggedOut = loggedOut
                     )
                 }

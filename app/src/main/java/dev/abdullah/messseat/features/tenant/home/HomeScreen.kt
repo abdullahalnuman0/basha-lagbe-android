@@ -49,8 +49,9 @@ fun HomeScreen(
             actions = {
                 AccountDropdownOption(
                     user = user,
-                    size = 32.dp,
-                    onProfile =  {onNavigate(SharedRoute.User)},
+                    onProfile = { onNavigate(SharedRoute.User) },
+                    onSaved = { onNavigate(TenantRoute.SavedPost) },
+                    onNotification = { onNavigate(SharedRoute.Notification) },
                     loggedOut = loggedOut
                 )
             }
@@ -99,7 +100,7 @@ fun HomeScreen(
                                 institutionNearby = r.institutionNearby,
                                 roomSize = "${r.roomWidth} x ${r.roomHeight}",
                                 totalSeats = r.availableSeats,
-                                onClick = {onNavigate(TenantRoute.RoomDetails(r))}
+                                onClick = { onNavigate(TenantRoute.RoomDetails(r.roomId)) }
                             )
 
                         }

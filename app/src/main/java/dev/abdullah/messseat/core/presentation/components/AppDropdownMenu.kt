@@ -9,6 +9,8 @@ import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Wallet
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -28,6 +30,7 @@ data class DropdownEntry(
     val icon: ImageVector? = null,
     val destructive: Boolean = false,
     val onClick: () -> Unit,
+    val badged: Long? = null,
 )
 
 @Composable
@@ -62,12 +65,25 @@ fun AppDropdownMenu(
                 },
                 leadingIcon = entry.icon?.let {
                     {
-                        Icon(
-                            it,
-                            null,
-                            Modifier.size(20.dp),
-                            tint = if (entry.destructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                        )
+                        BadgedBox(
+                            badge = entry.badged?.let {badge->
+                                {
+
+                                    if (badge > 0) {
+                                        Badge {
+                                            Text(badge.toString())
+                                        }
+                                    }
+                                }
+                            } ?: {}
+                        ) {
+                            Icon(
+                                it,
+                                null,
+                                Modifier.size(20.dp),
+                                tint = if (entry.destructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                            )
+                        }
                     }
                 },
                 onClick = { onDismiss(); entry.onClick() },

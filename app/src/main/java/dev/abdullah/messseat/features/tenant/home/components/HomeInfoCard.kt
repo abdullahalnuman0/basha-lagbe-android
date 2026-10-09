@@ -35,6 +35,11 @@ import androidx.compose.ui.unit.sp
 import dev.abdullah.messseat.core.presentation.components.AppSpacer
 import dev.abdullah.messseat.ui.theme.Space
 
+data class CampusSafeSpaceCardColor(
+    val fast: Color,
+    val second: Color
+)
+
 @Composable
 fun CampusSafeSpaceCard(
     onSearch: () -> Unit

@@ -42,6 +42,9 @@ sealed interface SharedRoute : NavRoute {
     @Serializable
     data class Conversation(val id: Long) : SharedRoute
 
+    @Serializable
+    data object Notification : SharedRoute
+
 }
 
 sealed interface TenantRoute : NavRoute {
@@ -53,14 +56,16 @@ sealed interface TenantRoute : NavRoute {
 
     // --- others routes ---
     @Serializable
-    data class RoomDetails(val room: RoomTenantResponse) : TenantRoute
+    data class RoomDetails(val roomId: Long) : TenantRoute
 
+    @Serializable
+    data object SavedPost : TenantRoute
 
     companion object {
         val TABS = setOf(
             BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
             BottomNavItem("Search", Icons.Outlined.Search, Search),
-            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat),
+            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat, true),
             BottomNavItem("Settings", Icons.Outlined.Settings, SharedRoute.Settings),
         )
 
@@ -80,9 +85,6 @@ sealed interface OwnerRoute : NavRoute {
     @Serializable
     data object Listings : OwnerRoute
 
-    @Serializable
-    data object Notifications : OwnerRoute
-
     // --- others routes ---
     @Serializable
     data class Editor(val property: PropertyResponse? = null) : OwnerRoute
@@ -94,8 +96,7 @@ sealed interface OwnerRoute : NavRoute {
         val TABS = setOf(
             BottomNavItem("Home", Icons.Outlined.Dashboard, Home),
             BottomNavItem("Listing", Icons.Outlined.LocationCity, Listings),
-            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat),
-//            BottomNavItem("Notifications", Icons.Outlined.Notifications, Notifications),
+            BottomNavItem("Chat", Icons.Outlined.ChatBubble, SharedRoute.Chat, true),
             BottomNavItem("Settings", Icons.Outlined.Settings, SharedRoute.Settings),
         )
 
@@ -109,7 +110,8 @@ sealed interface OwnerRoute : NavRoute {
 data class BottomNavItem(
     val label: String,
     val icon: ImageVector,
-    val route: NavRoute
+    val route: NavRoute,
+    val badged: Boolean = false
 ) {
     val routeName: String
         get() = route::class.qualifiedName.orEmpty()

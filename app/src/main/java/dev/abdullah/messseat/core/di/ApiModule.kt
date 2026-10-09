@@ -7,9 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import dev.abdullah.messseat.data.api.AuthApi
 import dev.abdullah.messseat.data.api.ChatApi
 import dev.abdullah.messseat.data.api.FileApi
+import dev.abdullah.messseat.data.api.NotificationApi
 import dev.abdullah.messseat.data.api.PropertyApi
 import dev.abdullah.messseat.data.api.RefreshApi
 import dev.abdullah.messseat.data.api.TenantApi
+import dev.abdullah.messseat.data.api.UserApi
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -41,4 +43,12 @@ object ApiModule {
     @Provides
     @Singleton
     fun chatApi(r: Retrofit): ChatApi = r.create(ChatApi::class.java)
+
+    @Provides
+    @Singleton
+    fun userApi(r: Retrofit): UserApi = r.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun notificationApi(r: Retrofit) : NotificationApi = r.create(NotificationApi::class.java)
 }

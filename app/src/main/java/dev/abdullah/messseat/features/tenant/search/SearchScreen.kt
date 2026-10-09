@@ -149,7 +149,7 @@ fun SearchScreen(
                                     institutionNearby = room.institutionNearby,
                                     roomSize = "${room.roomWidth} x ${room.roomHeight}",
                                     totalSeats = room.availableSeats,
-                                    onClick = { onNavigate(TenantRoute.RoomDetails(room)) }
+                                    onClick = { onNavigate(TenantRoute.RoomDetails(room.roomId)) }
                                 )
                             }
 

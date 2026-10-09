@@ -8,9 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -68,7 +73,6 @@ fun ConversationScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .imePadding()
     ) {
         AppTopBar(
             title = "Chat",
@@ -128,6 +132,9 @@ fun ConversationScreen(
         AppDivider()
 
         InputSection(
+            modifier = Modifier.windowInsetsPadding(
+                WindowInsets.ime.union(WindowInsets.navigationBars)
+            ),
             uploading = uploading,
             sending = sending,
             onMessageSend = { text -> vm.send(text) { snackbar.show(it) }; },
