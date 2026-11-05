@@ -21,8 +21,8 @@ class PreferencesManager(
     }
 
     val themeMode: Flow<ThemeMode> = dataStore.data.map { prefs ->
-        runCatching { ThemeMode.valueOf(prefs[Keys.THEME] ?: ThemeMode.LIGHT.name) }
-            .getOrDefault(ThemeMode.LIGHT)
+        runCatching { ThemeMode.valueOf(prefs[Keys.THEME] ?: ThemeMode.SYSTEM.name) }
+            .getOrDefault(ThemeMode.SYSTEM)
     }
 
     val inAppNotification = dataStore.data.map { prefs ->

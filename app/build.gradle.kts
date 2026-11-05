@@ -31,8 +31,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // --- app config ---
-        buildConfigField("String", "BASE_URL", "\"http://192.168.0.132:8081/api/v1/\"")
-//        buildConfigField("String", "BASE_URL", "\"https://basha-lagbe-backend.onrender.com/api/v1/\"")
+//        buildConfigField("String", "BASE_URL", "\"http://192.168.0.132:8081/api/v1/\"")
+//        buildConfigField("String", "BASE_URL", "\"https://6387-118-179-183-228.ngrok-free.app/api/v1/\"")
+        buildConfigField("String", "BASE_URL", "\"https://basha-lagbe-backend.onrender.com/api/v1/\"")
     }
 
     buildFeatures {
