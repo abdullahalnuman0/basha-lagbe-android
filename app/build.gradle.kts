@@ -16,13 +16,13 @@ else
 
 
 android {
-    namespace = "dev.abdullah.messseat"
+    namespace = "dev.example.messseat"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "dev.abdullah.messseat"
+        applicationId = "dev.example.messseat"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
